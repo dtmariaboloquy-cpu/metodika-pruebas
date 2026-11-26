@@ -1158,6 +1158,7 @@ details.se-mas{border:1px solid var(--linea);border-radius:10px;padding:8px 12px
   .pzA:is(.piz-full,.pz-emb) .pz-rapida .pr-b:has(svg){font-size:0;gap:0;padding:4px 7px}
   .pzA:is(.piz-full,.pz-emb) .pz-rapida .pr-b:has(svg) svg{width:17px;height:17px}
 }
+.desc-capa{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);padding:16px}.desc-caja{background:var(--carta);color:var(--tinta);border:1px solid var(--linea);border-radius:14px;max-width:380px;width:100%;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.4)}.desc-caja b{font-family:var(--f-d);font-size:22px;display:block;margin-bottom:6px}.desc-caja p{margin:0 0 14px;color:var(--sub);font-size:15px;line-height:1.4}.desc-pie{display:flex;gap:8px;flex-wrap:wrap}.desc-pie .btn{min-height:44px;flex:1}
 </style>
 
 <div class="app">
@@ -1704,8 +1705,30 @@ const ULT_PILAR={};
 document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('[data-sub]');if(a){e.preventDefault();ir(a.dataset.sub)}});
 function rutasPilar(k){const p=PILARES.find(x=>x[0]===k);return p?p[3].filter(r=>r!=='coordinacion'||(miRol()==='coord'&&cats().length>1)):[]}
 function subnavHtml(){const k=pilarDe(ruta);if(!k)return '';return `<nav class="subnav" aria-label="Secciones de ${k}">${rutasPilar(k).map(r=>`<a data-sub="${r}" class="${ruta===r?'activo':''}">${esc(NOM_R[r]||r)}</a>`).join('')}</nav>`}
+/* ---------- Historial: el botón «atrás» (navegador, celular y app instalada) vuelve a la pantalla anterior
+   y, si hay una ventana abierta, primero la cierra. ---------- */
+let HIST_POP=false,HIST_IGNORAR=0;const CAPAS_H=[];let CAPA_POP=false;
+function modalAbierto(){const c=document.getElementById('capaModal');return !!(c&&c.firstElementChild)}
+function stParam(p){try{return p==null?null:JSON.parse(JSON.stringify(p))}catch(e){return null}}
+function hPush(st,url){try{const h=history.state;if(h&&h.mtk&&(h.modal||h.capa)&&!modalAbierto()&&!CAPAS_H.length)history.replaceState(st,'',url);else history.pushState(st,'',url)}catch(e){}}
+function histRuta(reemplazar){const st={mtk:1,r:ruta,p:stParam(param)},url='#'+ruta;if(reemplazar){try{const h=history.state;if(h&&h.mtk&&(h.modal||h.capa))return;history.replaceState(st,'',url)}catch(e){}return}hPush(st,url)}
+function iniciarHist(){try{const h=history.state;if(h&&h.mtk){history.replaceState({mtk:1,r:ruta,p:null},'','#'+ruta);return}
+  if(ruta!=='inicio'){history.replaceState({mtk:1,r:'inicio',p:null},'','#inicio');history.pushState({mtk:1,r:ruta,p:null},'','#'+ruta)}else history.replaceState({mtk:1,r:'inicio',p:null},'','#inicio')}catch(e){}}
+function marcaModalH(){try{const h=history.state;if(h&&h.mtk&&h.modal)return;history.pushState({mtk:1,r:ruta,p:stParam(param),modal:1},'','#'+ruta)}catch(e){}}
+function soltarMarcaH(){setTimeout(()=>{try{const h=history.state;if(!modalAbierto()&&h&&h.mtk&&h.modal&&!CAPAS_H.length){HIST_IGNORAR++;history.back()}}catch(e){}},0)}
+function abrirCapa(fn){CAPAS_H.push(fn);try{const h=history.state;if(h&&h.mtk&&h.modal&&!modalAbierto())history.replaceState({mtk:1,r:ruta,p:stParam(param),capa:1},'','#'+ruta);else history.pushState({mtk:1,r:ruta,p:stParam(param),capa:1},'','#'+ruta)}catch(e){}}
+function quitarCapa(fn){const i=CAPAS_H.indexOf(fn);if(i>=0)CAPAS_H.splice(i,1);if(CAPA_POP)return;try{const h=history.state;if(h&&h.mtk&&h.capa){HIST_IGNORAR++;history.back()}}catch(e){}}
+window.addEventListener('popstate',e=>{const st=e.state;
+  if(HIST_IGNORAR>0){HIST_IGNORAR--;if(modalAbierto())marcaModalH();return}
+  if(modalAbierto()){if(MODAL_SUCIO){marcaModalH();pedirCerrarModal()}else cerrarModalBase();return}
+  if(CAPAS_H.length){const fn=CAPAS_H[CAPAS_H.length-1];CAPA_POP=true;try{fn()}catch(err){console.warn(err)}finally{CAPA_POP=false}const i=CAPAS_H.indexOf(fn);if(i>=0)CAPAS_H.splice(i,1);return}
+  let r=st&&st.mtk?st.r:(location.hash||'').replace('#','');
+  if(!st||!st.mtk){if(!VISTAS[r]){try{history.replaceState({mtk:1,r:ruta,p:stParam(param)},'','#'+ruta)}catch(err){}return}}
+  if(!VISTAS[r])r='inicio';const p=st&&st.mtk?st.p:null;
+  if(r===ruta&&JSON.stringify(p)===JSON.stringify(stParam(param)))return;
+  HIST_POP=true;try{ir(r,p)}finally{HIST_POP=false}});
 function ir(r,p=null){try{if(typeof PZ_SESION!=='undefined'&&typeof ruta!=='undefined'&&ruta==='pizarra'&&r!=='pizarra')PZ_SESION=null;if(typeof ruta!=='undefined'&&ruta==='pizarra'&&r!=='pizarra'&&typeof PZ!=='undefined'&&PZ){const desdeP=!!PZ_PARTIDO,existe=S.pizarras.some(x=>x.id===PZ.id);if((desdeP||existe)&&guardarPzAuto())aviso('Pizarra guardada');PZ_PARTIDO=null}}catch(e){console.warn(e)}if(r!=='pizarra'&&typeof PZ_FULL!=='undefined'&&PZ_FULL){PZ_FULL=false;document.body.classList.remove('pz-fs')}if(r==='pizarra'&&ruta!=='pizarra'&&innerWidth>800){let a=null;try{a=localStorage.getItem('mtk_pz_amplia')}catch(e){}if(a==='1'||(a==null&&innerHeight<900)){PZ_FULL=true;document.body.classList.add('pz-fs')}}
-  ruta=r;param=p;try{history.replaceState(null,'','#'+r)}catch(e){}pintar();window.scrollTo(0,0);
+  const _mismaR=ruta===r;ruta=r;param=p;if(!HIST_POP)histRuta(_mismaR);pintar();window.scrollTo(0,0);
   if(r==='pizarra'&&!PZ_FULL)setTimeout(()=>{const w=$('#pizWrap');if(!w)return;const cab=innerWidth<=800||innerHeight<860?0:(($('.lateral')||{}).offsetHeight||0);window.scrollTo(0,Math.max(0,w.getBoundingClientRect().top+scrollY-cab-6));ajustarPzAlto()},60)}
 function pintarMenu(){
   const pa=pilarDe(ruta);if(pa)ULT_PILAR[pa]=ruta;
@@ -1920,13 +1943,27 @@ function modal(titulo,html,{ancho=false,alMontar}={}){
   const capa=$('#capaModal');
   capa.innerHTML=`<div class="velo"><div class="modal ${ancho?'ancho':''}" role="dialog" aria-modal="true" aria-label="${esc(titulo)}"><div class="modal-cab"><h2>${esc(titulo)}</h2><button class="btn fantasma chico x" data-cerrar aria-label="Cerrar">✕</button></div><div class="modal-cuerpo">${html}</div></div></div>`;
   const velo=$('.velo',capa);
-  velo.addEventListener('click',e=>{if(e.target===velo||e.target.closest('[data-cerrar]'))cerrarModal()});
-  document.addEventListener('keydown',escModal);
+  velo.addEventListener('click',e=>{if(e.target===velo||e.target.closest('[data-cerrar]'))pedirCerrarModal()});
+  document.removeEventListener('keydown',escModal);document.addEventListener('keydown',escModal);MODAL_SUCIO=false;marcaModalH();
   if(alMontar)alMontar($('.modal',capa));
   const f=$('input,select,textarea,button:not(.x)',$('.modal-cuerpo',capa));if(f)f.focus();
 }
-function escModal(e){if(e.key==='Escape')cerrarModal()}
-function cerrarModal(){$('#capaModal').innerHTML='';document.removeEventListener('keydown',escModal);if(typeof pintarPend!=='undefined'&&pintarPend){pintarPend=false;setTimeout(pintar,0)}}
+function escModal(e){if(e.key!=='Escape')return;const d=document.getElementById('descCapa');if(d){e.preventDefault();d.remove();return}pedirCerrarModal()}
+/* ¿Cuenta como cambio? Lo que se escribe o se elige en la ventana, salvo buscadores y filtros */
+function cuentaCambio(el){if(!el||!el.closest||!el.closest('#capaModal .modal-cuerpo'))return false;if(el.closest('[data-nosucio]'))return false;
+  const tg=(el.tagName||'').toLowerCase();if(!(tg==='input'||tg==='textarea'||tg==='select'||el.isContentEditable))return false;
+  if(tg==='input'&&/^(search|button|submit|reset|file)$/i.test(el.type||''))return false;
+  const pista=((el.id||'')+' '+(el.name||'')+' '+(el.className||'')+' '+(el.getAttribute('placeholder')||'')+' '+(el.getAttribute('aria-label')||'')).toLowerCase();
+  return !/(busc|filtr|search|\bq\b)/.test(pista)}
+let MODAL_SUCIO=false;
+['input','change'].forEach(t=>document.addEventListener(t,e=>{if(e.isTrusted&&modalAbierto()&&cuentaCambio(e.target))MODAL_SUCIO=true},true));
+function pedirCerrarModal(){if(!modalAbierto())return;if(!MODAL_SUCIO){cerrarModal();return}
+  const velo=$('#capaModal .velo');if(!velo||document.getElementById('descCapa'))return;
+  velo.insertAdjacentHTML('beforeend',`<div id="descCapa" class="desc-capa"><div class="desc-caja" role="alertdialog" aria-modal="true" aria-labelledby="descTit" aria-describedby="descTxt"><b id="descTit">¿Descartar los cambios?</b><p id="descTxt">Lo que cargaste en esta ventana todavía no se guardó. Si la cerrás, se pierde.</p><div class="desc-pie"><button class="btn pri" id="descSeguir">Seguir editando</button><button class="btn peligro" id="descSi">Descartar cambios</button></div></div></div>`);
+  const d=$('#descCapa');d.addEventListener('click',e=>{e.stopPropagation();if(e.target===d)d.remove()});
+  $('#descSeguir',d).onclick=()=>d.remove();$('#descSi',d).onclick=()=>{MODAL_SUCIO=false;cerrarModal()};setTimeout(()=>{const b=$('#descSeguir',d);if(b)b.focus()},0)}
+function cerrarModal(){cerrarModalBase();soltarMarcaH()}
+function cerrarModalBase(){MODAL_SUCIO=false;$('#capaModal').innerHTML='';document.removeEventListener('keydown',escModal);if(typeof pintarPend!=='undefined'&&pintarPend){pintarPend=false;setTimeout(pintar,0)}}
 function confirmar(titulo,texto,boton,fn){
   modal(titulo,`<p class="sub" style="margin:0">${esc(texto)}</p><div class="modal-pie"><button class="btn" data-cerrar>Cancelar</button><button class="btn pri" id="okConf">${esc(boton)}</button></div>`,{alMontar:m=>{$('#okConf',m).onclick=()=>{cerrarModal();fn()}}});
 }
@@ -3239,8 +3276,8 @@ function modoCancha(id){const s=S.sesiones.find(x=>x.id===id);if(!s)return;const
     ['#mcSerOn','#mcSn','#mcSt','#mcSp'].forEach(q=>$(q,ov).onchange=ser)};
   const guardarNota=()=>{const n=$('#mcNota',ov);if(n){R.nota[i]=n.value.trim();s.real=R;guardar()}};
   const tecla=e=>{if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;if(e.key==='ArrowRight'){$('#mcSig',ov).click()}else if(e.key==='ArrowLeft'&&i){$('#mcAnt',ov).click()}else if(e.key===' '){e.preventDefault();$('#mcPlay',ov).click()}else if(e.key==='Escape')salir()};
-  function salir(){guardarNota();parar();cancelAnimationFrame(raf);document.removeEventListener('keydown',tecla);try{wl&&wl.release()}catch(e){}if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});ov.remove();document.body.classList.remove('mc-on');pintar()}
-  document.addEventListener('keydown',tecla);pintarT()}
+  function salir(){quitarCapa(salir);guardarNota();parar();cancelAnimationFrame(raf);document.removeEventListener('keydown',tecla);try{wl&&wl.release()}catch(e){}if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});ov.remove();document.body.classList.remove('mc-on');pintar()}
+  document.addEventListener('keydown',tecla);abrirCapa(salir);pintarT()}
 /* ================= COMPARTIR LA SEMANA y CALENDARIO ================= */
 function datosSemana(m){const club=S.club||{},dias=planMicro(m);
   return {tipo:'semana',club:club.nombre||'',escudo:club.escudo||'',estilo:club.pizarraEstilo||'',rama:RAMA(),categoria:CATN(),micro:{nombre:m.nombre,foco:m.foco||'',objetivo:m.objetivo||'',inicio:m.inicio,fin:m.fin},actualizado:new Date().toISOString(),
@@ -4960,9 +4997,9 @@ function presentar(){
   const parar=()=>{if(anim){cancelAnimationFrame(anim);anim=null;$('#pvPlay',ov).textContent='▶ Animar'}};
   const play=()=>{if(!N){aviso('Este ejercicio no tiene pasos para animar.');return}if(anim){parar();return}fr=0;trazos.length=0;redib();$('#pvPlay',ov).textContent='■ Detener';const t0=performance.now();const loop=now=>{const st=estadoAnim(pz,now-t0);if(st.fin){anim=null;fr=N;pintarSvg();$('#pvPlay',ov).textContent='▶ Animar';return}box.innerHTML=svgPizarra(pz,{frame:st.seg,over:st.over});const sv=box.querySelector('svg');sv.style.height='100%';sv.style.width='auto';sv.style.maxWidth='100%';$('#pvPaso',ov).textContent='Paso '+(st.seg+1)+' → '+(st.seg+2);anim=requestAnimationFrame(loop)};anim=requestAnimationFrame(loop)};
   const ir2=d=>{parar();fr=Math.max(0,Math.min(N,fr+d));trazos.length=0;redib();pintarSvg()};
-  const salir=()=>{parar();document.removeEventListener('keydown',tecla);window.removeEventListener('resize',ajustar);if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});ov.remove()};
+  const salir=()=>{quitarCapa(salir);parar();document.removeEventListener('keydown',tecla);window.removeEventListener('resize',ajustar);if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});ov.remove()};
   const tecla=e=>{if(e.key==='Escape')salir();else if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();ir2(1)}else if(e.key==='ArrowLeft')ir2(-1)};
-  document.addEventListener('keydown',tecla);window.addEventListener('resize',ajustar);
+  document.addEventListener('keydown',tecla);window.addEventListener('resize',ajustar);abrirCapa(salir);
   $('#pvAnt',ov).onclick=()=>ir2(-1);$('#pvSig',ov).onclick=()=>ir2(1);$('#pvPlay',ov).onclick=play;$('#pvSalir',ov).onclick=salir;
   $('#pvBorra',ov).onclick=()=>{trazos.length=0;redib()};
   $('#pvDib',ov).onclick=()=>{dib=!dib;cv.style.pointerEvents=dib?'auto':'none';$('#pvDib',ov).classList.toggle('ama',dib)};
@@ -7146,7 +7183,7 @@ function abrirClub(clubId,recienCreado){
   const ref=db.collection('clubes').doc(clubId);
   let listos={club:false,datos:false,partidos:false,pizarras:false,fotos:false};
   if(!recienCreado)S={version:1,demo:false,contenidos:[...CONT_BASE],club:{nombre:'',categoria:'',temporada:String(HOY.getFullYear()),rama:'F',escudo:'',duracionTiempo:45},jugadores:[],tareas:[],pizarras:[],microciclos:[],sesiones:[],partidos:[],asistencia:{},evaluaciones:[]};
-  const listo=k=>{if(listos[k])return;listos[k]=true;if(Object.values(listos).every(Boolean)){document.body.classList.remove('sin-menu');migrarNube();{const h=(location.hash||'').replace('#','');if(VISTAS[h])ruta=h}cargarPlan().then(()=>{pintar();setTimeout(revisarEspacioDuenia,5000);estadoNube(navigator.onLine===false?'offline':'guardado');setTimeout(tareasDiarias,15000)})}};
+  const listo=k=>{if(listos[k])return;listos[k]=true;if(Object.values(listos).every(Boolean)){document.body.classList.remove('sin-menu');migrarNube();{const h=(location.hash||'').replace('#','');if(VISTAS[h])ruta=h}iniciarHist();cargarPlan().then(()=>{pintar();setTimeout(revisarEspacioDuenia,5000);estadoNube(navigator.onLine===false?'offline':'guardado');setTimeout(tareasDiarias,15000)})}};
   subs.push(ref.onSnapshot(d=>{
     if(!d.exists){cortarSubs();pantallaClub('El club ya no existe.');return}
     CLUBDOC=d.data();
@@ -7292,7 +7329,8 @@ async function subirTodo(){KS.forEach(k=>{LAST[k]={}});ultimo={};ultimoItems={pa
 function guardarYa(){if(tSync){clearTimeout(tSync);sincronizar()}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')guardarYa()});
 window.addEventListener('pagehide',guardarYa);
-window.addEventListener('beforeunload',e=>{if(tSync||sincronizando){guardarYa();e.preventDefault();e.returnValue=''}});
+window.addEventListener('beforeunload',e=>{if(tSync||sincronizando){guardarYa();e.preventDefault();e.returnValue='';return}if((modalAbierto()&&MODAL_SUCIO)||pzSinGuardar()){e.preventDefault();e.returnValue=''}});
+function pzSinGuardar(){try{if(typeof PZ==='undefined'||!PZ)return false;const i=S.pizarras.findIndex(x=>x.id===PZ.id);return !!(i>=0?firmaPz(S.pizarras[i])!==firmaPz(PZ):(PZ._firmaPl?firmaPz(PZ)!==PZ._firmaPl:(PZ.elementos.length||PZ.flechas.length||PZ.textos.length||PZ.zonas.length)))}catch(e){return false}}
 
 /* ---------- Cómo ve Metodika cada rol ---------- */
 const QUE_VE={coord:['Todas las categorías del club (y la opción “Todo el club”)','Panel de Coordinación para comparar categorías','Aprueba a quién entra, da roles y elige categorías','Plan, copias de seguridad y Papelera'],
@@ -8563,6 +8601,7 @@ else{
   if(migrarTareasBase())guardar();
   S.pizarras.forEach(normalizar);
   {const h=(location.hash||'').replace('#','');if(VISTAS[h])ruta=h}
+  iniciarHist();
   pintar();
 }
 
