@@ -7314,7 +7314,7 @@ async function panelRespaldos(el){
   try{const ix=await db.collection('clubes').doc(CLUB).collection('datos').doc('~resp-indice').get();const dias=(ix.exists&&ix.data().dias)||{},fs=Object.keys(dias).sort().reverse();
     caja.innerHTML=fs.length?`<div class="lista">${fs.map(f=>`<div class="fila"><div style="flex:1"><b>${fFecha(f)}</b><div class="sub" style="font-size:12.5px">${Math.max(1,Math.round(dias[f].bytes/1024))} KB</div></div><button class="btn chico" data-rbaj="${f}">Descargar</button>${esAdmin()?`<button class="btn chico peligro" data-rres="${f}">Volver a este día</button>`:''}</div>`).join('')}</div>`:'<div class="sub" style="font-size:13.5px">Todavía no hay copias. La primera se hace sola hoy.</div>';
     $$('[data-rbaj]',caja).forEach(b=>b.onclick=async()=>{b.disabled=true;try{const t=await bajarRespaldo(b.dataset.rbaj);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='metodika-copia-'+b.dataset.rbaj+'.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}catch(e){aviso(errTxt(e))}b.disabled=false});
-    $$('[data-rres]',caja).forEach(b=>b.onclick=()=>confirmar('¿Volver al '+fFecha(b.dataset.rres)+'?','Los datos del club quedan como estaban ese día. Lo que se cargó después queda en la Papelera por si lo necesitás.','Volver a ese día',async()=>{try{const d=JSON.parse(await bajarRespaldo(b.dataset.rres));aplicarCopia(d);aviso('Datos restaurados al '+fFecha(b.dataset.rres))}catch(e){aviso(errTxt(e))}}));
+    $$('[data-rres]',caja).forEach(b=>b.onclick=()=>confirmar('¿Volver al '+fFecha(b.dataset.rres)+'?','Los datos del club quedan como estaban en la copia de ese día, que se hace la primera vez que alguien abre Metodika ese día. Lo que se cargó después queda en la Papelera por si lo necesitás, y los eventos del calendario se conservan.','Volver a ese día',async()=>{try{const d=JSON.parse(await bajarRespaldo(b.dataset.rres));aplicarCopia(d);aviso('Datos restaurados al '+fFecha(b.dataset.rres))}catch(e){aviso(errTxt(e))}}));
   }catch(e){caja.innerHTML='<div class="sub">No se pudieron leer las copias: '+esc(errTxt(e))+'</div>'}}
 /* Medidor de espacio en la nube (aproximado; se calcula solo cuando se toca el botón) */
 const ESP_TOTAL=1024*1024*1024;
@@ -7366,7 +7366,10 @@ async function restaurarModulos(L){if(MODO!=='nube'||!Array.isArray(L)||!L.lengt
   for(const x of L){if(!x||!x.id||!x.d)continue;if(!(MOD_COLS.includes(x.c)||(x.c==='datos'&&/^va_/.test(x.id))))continue;
     try{const r=db.collection(base+x.c).doc(x.id),ex=await r.get();if(ex.exists)continue;await r.set(jsonAFs(x.d));n++}catch(e){console.warn('restaurar modulo',e)}}
   return n}
-function aplicarCopia(d){if(!d||!d.club||!Array.isArray(d.jugadores))throw new Error('La copia no es válida');delete d._modulos;(d.jugadores||[]).forEach(j=>{if(!j.foto&&FOTOS[j.id])j.foto=FOTOS[j.id]});S=d;migrar();migrarTareasBase();S.pizarras.forEach(normalizar);guardar();ir('inicio')}
+function aplicarCopia(d){if(!d||!d.club||!Array.isArray(d.jugadores))throw new Error('La copia no es válida');delete d._modulos;
+  /* Los eventos del calendario no pasan por la Papelera: se conservan los que no estaban en la copia */
+  try{const act=(S&&S.club&&S.club.eventos)||[],ids=new Set((d.club.eventos||[]).map(e=>e.id));const extra=act.filter(e=>e&&!ids.has(e.id));if(extra.length)d.club.eventos=[...(d.club.eventos||[]),...extra]}catch(e){}
+  (d.jugadores||[]).forEach(j=>{if(!j.foto&&FOTOS[j.id])j.foto=FOTOS[j.id]});S=d;migrar();migrarTareasBase();S.pizarras.forEach(normalizar);guardar();ir('inicio')}
 /* Tareas de mantenimiento: copia diaria y limpieza de la papelera vieja (solo admin) */
 async function tareasDiarias(){
   try{await respaldoDiario()}catch(e){console.warn('respaldo',e)}
@@ -7433,7 +7436,7 @@ function iniciarNube(){
   auth.onAuthStateChanged(u=>{
     cortarSubs();clearInterval(tEspera);
     if(u){if(registrando)return;if(primera||!USR||USR.uid!==u.uid)alEntrar(u)}
-    else{USR=null;PERFIL=null;CLUB=null;CLUBDOC=null;SOLIC=[];MODO='local';resetSync();pantallaAcceso()}
+    else{USR=null;PERFIL=null;CLUB=null;CLUBDOC=null;SOLIC=[];MODO='local';resetSync();try{S=crearDemo();cerrarModal()}catch(e){}pantallaAcceso()}
     primera=false;
   });
 }
