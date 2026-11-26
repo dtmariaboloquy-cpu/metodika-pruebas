@@ -6977,7 +6977,16 @@ function pantallaEspera(){
 
 /* ---------- Cerrar sesión sin dejar datos del club en la compu (compus compartidas) ---------- */
 function limpiarDatosClubLocales(){const fijos=/^(scout_(last|once_propio|split|tab)|vac_local_.*)$/;const borrar=[];try{for(let i=0;i<localStorage.length;i++){const k0=localStorage.key(i)||'';const k=k0.replace(/^PRUEBA::/,'');if(/^vac_/.test(k)&&!/^vac_local_/.test(k))borrar.push(k);else if(/^scout_/.test(k)&&!/^scout_(once_propio|split|tab)$/.test(k))borrar.push(k);else if(k==='metodika_pz_pendiente')borrar.push(k)}}catch(e){}borrar.forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});return borrar.length}
-async function salirSeguro(){try{cortarSubs()}catch(e){}try{limpiarDatosClubLocales()}catch(e){}try{await auth.signOut()}catch(e){}try{await db.terminate();await db.clearPersistence()}catch(e){}location.reload()}
+function conTiempo(p,ms){return Promise.race([Promise.resolve(p).then(()=>true),new Promise(r=>setTimeout(()=>r(false),ms))])}
+async function salirSeguro(forzar){
+  /* antes de borrar lo guardado en la compu, subir a la nube lo que falte */
+  if(!forzar&&typeof MODO!=='undefined'&&MODO==='nube'){
+    aviso('Guardando en la nube antes de cerrar sesión…');
+    let ok=true;try{if(tSync){clearTimeout(tSync);tSync=null;ok=await conTiempo(sincronizar(),8000)}}catch(e){ok=false}
+    try{ok=(await conTiempo(db.waitForPendingWrites(),8000))&&ok}catch(e){ok=false}
+    if(!ok||!navigator.onLine){confirmar('Hay cambios sin subir a la nube','Todavía no se pudieron guardar en la nube algunos cambios (puede ser por falta de internet). Conectate y volvé a tocar “Cerrar sesión”. Si cerrás igual, esos cambios se pierden.','Cerrar igual',()=>salirSeguro(true));return}
+  }
+  try{cortarSubs()}catch(e){}try{limpiarDatosClubLocales()}catch(e){}try{await auth.signOut()}catch(e){}try{await db.terminate();await db.clearPersistence()}catch(e){}location.reload()}
 /* ---------- Abrir el club y sincronizar ---------- */
 function cortarSubs(){subs.forEach(u=>{try{u()}catch(e){}});subs=[]}
 /* ================= PRUEBA GRATIS Y PLAN PAGO ================= */
