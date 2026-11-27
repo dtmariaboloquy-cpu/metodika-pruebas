@@ -1159,6 +1159,74 @@ details.se-mas{border:1px solid var(--linea);border-radius:10px;padding:8px 12px
   .pzA:is(.piz-full,.pz-emb) .pz-rapida .pr-b:has(svg) svg{width:17px;height:17px}
 }
 .desc-capa{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);padding:16px}.desc-caja{background:var(--carta);color:var(--tinta);border:1px solid var(--linea);border-radius:14px;max-width:380px;width:100%;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.4)}.desc-caja b{font-family:var(--f-d);font-size:22px;display:block;margin-bottom:6px}.desc-caja p{margin:0 0 14px;color:var(--sub);font-size:15px;line-height:1.4}.desc-pie{display:flex;gap:8px;flex-wrap:wrap}.desc-pie .btn{min-height:44px;flex:1}
+
+/* ===== Sector 01 · navegación ===== */
+#barraInf,#menuLat,#ctxNav{display:none}
+body.sin-menu #barraInf,body.sin-menu #menuLat,body.mc-on #barraInf,body.pz-fs #barraInf{display:none!important}
+#barraInf svg,#menuLat svg,.hoja-pil svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* — modo «abajo»: celular y tablet vertical — */
+body[data-nav=abajo] nav.menu,body[data-nav=abajo] #catBox,body[data-nav=abajo] .lateral .club-mini{display:none!important}
+body[data-nav=abajo] .lateral{flex-wrap:nowrap!important;height:auto!important;min-height:0;padding:6px 8px 6px 12px!important;gap:8px!important;align-items:center}
+body[data-nav=abajo] .lateral .marca{flex:none;order:1}body[data-nav=abajo] .lateral .marca b,body[data-nav=abajo] .lateral .marca small{display:none!important}
+body[data-nav=abajo] .lateral .marca svg{width:32px!important;height:32px!important}
+body[data-nav=abajo] #ctxNav{display:flex;order:2;flex:1 1 auto;min-width:0;align-items:center;gap:8px;position:relative;padding:4px 6px;border-radius:10px;min-height:44px}
+#ctxNav .esc{width:28px;height:28px;border-radius:50%;background:var(--carta2);display:grid;place-items:center;overflow:hidden;flex:none;font:700 14px var(--f-d);color:var(--met)}
+#ctxNav .esc img{width:100%;height:100%;object-fit:cover}
+#ctxNav .cx-t{min-width:0;display:flex;flex-direction:column;line-height:1.15}
+#ctxNav small,#ctxNav b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ctxNav small{font-size:11.5px;color:var(--sub)}#ctxNav b{font-size:14px;font-weight:700;color:var(--tinta)}
+#ctxNav select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
+#ctxNav:focus-within{outline:3px solid var(--amarillo);outline-offset:1px}
+body[data-nav=abajo] .lateral .pie-lat{order:3;margin-left:0!important;gap:0!important;flex:none}
+body[data-nav=abajo] .pie-lat .util{min-width:44px!important;width:44px!important;height:44px!important;padding:0!important;display:grid!important;place-items:center;border-radius:12px}
+body[data-nav=abajo] .pie-lat .util .lbl,body[data-nav=abajo] .pie-lat #estadoNube,body[data-nav=abajo] .pie-lat .yo{display:none!important}
+body[data-nav=abajo] #barraInf{display:flex;position:fixed;left:0;right:0;bottom:var(--franja,0px);z-index:50;background:var(--carta);border-top:1px solid var(--linea);padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(0,0,0,.12)}
+#barraInf button{flex:1 1 0;min-width:0;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:none;border:0;color:var(--sub);font:600 12px/1 var(--f-t);position:relative;cursor:pointer;border-radius:12px;padding:4px 2px}
+#barraInf button svg{width:23px;height:23px}
+#barraInf button .pl{width:23px;height:23px;border-radius:7px;display:grid;place-items:center;font:800 14px/1 var(--f-d);font-style:normal;color:#141412;background:var(--bc);opacity:.75}
+#barraInf button.activo{color:var(--tinta);font-weight:700}
+#barraInf button.activo .pl{opacity:1}
+#barraInf button.activo:before{content:"";position:absolute;top:-4px;left:24%;right:24%;height:3px;border-radius:0 0 3px 3px;background:var(--bc)}
+#barraInf button:active{background:var(--carta2)}
+body[data-nav=abajo] main{padding-bottom:calc(92px + var(--franja,0px) + env(safe-area-inset-bottom,0px))!important}
+body[data-nav=abajo] .aviso-t{bottom:calc(80px + var(--franja,0px) + env(safe-area-inset-bottom,0px))!important}
+body[data-nav=abajo].pz-fs .aviso-t{bottom:92px!important}
+body[data-nav=abajo] .cab .eyebrow{font-size:10.5px!important;margin-bottom:2px}
+body[data-nav=abajo] .cab h1{font-size:24px!important}
+body[data-nav=abajo] .cab .subnav a{min-height:44px;display:inline-flex;align-items:center}
+.hoja-pil{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.hoja-pil .hp-b{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 12px;border-radius:12px;border:1px solid var(--linea);background:var(--carta2);color:var(--tinta);font:600 15.5px var(--f-t);cursor:pointer;text-align:left}
+.hoja-pil .hp-b svg{width:20px;height:20px;flex:none}
+.hoja-pil .hp-b.activo{background:var(--bc);border-color:var(--bc);color:#141412}
+/* — modo «lado»: compu y tablet horizontal — */
+body[data-nav=lado] nav.menu{display:none!important}
+body[data-nav=lado] .app{display:grid!important;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto 1fr;align-items:start}
+body[data-nav=lado] .app>.lateral{grid-column:1/-1;grid-row:1;width:auto}
+body[data-nav=lado] .app>main{grid-column:2;grid-row:2;min-width:0}
+body[data-nav=lado]:not(.sin-menu) #menuLat{display:flex;grid-column:1;grid-row:2;position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;overflow-x:hidden;flex-direction:column;gap:2px;width:224px;padding:10px 8px 24px;background:var(--carta);border-right:1px solid var(--linea);min-height:calc(100vh - 66px);scrollbar-width:thin}
+body[data-nav=lado][data-lat=plegado] #menuLat{width:64px}
+#menuLat .ml-g{display:flex;flex-direction:column;gap:1px;padding-bottom:6px}
+#menuLat .ml-g+.ml-g{border-top:1px solid var(--linea);padding-top:6px}
+#menuLat .ml-pl{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:0;background:none;color:var(--sub);border-radius:10px;cursor:pointer;font:600 13px var(--f-t)}
+#menuLat .ml-pl:hover{background:var(--carta2);color:var(--tinta)}
+#menuLat svg{width:20px;height:20px;flex:none}
+#menuLat .ml-h{display:flex;align-items:center;gap:8px;padding:8px 12px 4px;font:800 12.5px/1 var(--f-d);letter-spacing:2px;color:var(--tinta)}
+#menuLat .ml-h i{width:10px;height:10px;border-radius:3px;background:var(--pc);flex:none}
+#menuLat .ml-a{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:10px;color:var(--sub);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap}
+#menuLat .ml-a:hover{background:var(--carta2);color:var(--tinta)}
+#menuLat .ml-a.activo{background:color-mix(in srgb,var(--pc,var(--tinta)) 16%,transparent);color:var(--tinta);box-shadow:inset 3px 0 0 var(--pc,var(--tinta))}
+body[data-lat=plegado] #menuLat .ml-t{display:none}
+body[data-lat=plegado] #menuLat .ml-a,body[data-lat=plegado] #menuLat .ml-pl{justify-content:center;padding:8px 0}
+body[data-lat=plegado] #menuLat .ml-h{justify-content:center;padding:8px 0 4px}
+body[data-lat=plegado] #menuLat .ml-h i{width:24px;height:4px;border-radius:2px}
+body[data-nav=lado] .cab .subnav,body[data-nav=lado] .cab.solo-nav{display:none!important}
+body[data-nav=lado] main{padding-inline:28px!important}
+body[data-nav=lado] .cab{margin-inline:-28px!important;padding-inline:28px!important}
+body[data-nav=lado].pz-fs #menuLat{visibility:hidden}
+body[data-nav=lado] .lateral .club-mini{display:flex!important;max-width:min(560px,48vw)!important;padding-right:14px!important}
+body[data-nav=lado] #catBox{flex-basis:auto!important}
+body[data-nav=lado] .lateral .club-mini>:not(.esc){display:block!important}
+body[data-nav=lado] .lateral .club-mini div{max-width:none!important}
 </style>
 
 <div class="app">
@@ -1697,7 +1765,7 @@ const ICO={
 const RUTAS=[['inicio','Inicio'],['calendario','Calendario'],['coordinacion','Coordinación'],['metodologia','Metodología'],['plantel','Plantel'],['planificacion','Planificación'],['biblioteca','Biblioteca'],['lecturas','Lecturas'],['pizarra','Pizarra táctica'],['partido','Partido'],['analisis','Análisis de rival'],['videoanalisis','Videoanálisis'],['evaluaciones','Evaluaciones'],['fixture','Fixture'],['rendimiento','Rendimiento'],['asistencia','Asistencia'],['cargas','Cargas'],['-'],['ajustes','Ajustes'],['sugerencia','Enviar sugerencia']];
 const ICO_R={calendario:'cal',coordinacion:'coord',metodologia:'metod',inicio:'inicio',plantel:'plantel',planificacion:'plan',biblioteca:'biblio',lecturas:'libro',pizarra:'pizarra',partido:'partido',analisis:'video',videoanalisis:'tag',evaluaciones:'eval',fixture:'fixture',rendimiento:'rendim',asistencia:'asist',cargas:'carga',tienda:'tienda',ajustes:'ajustes',sugerencia:'charla'};
 let ruta='inicio',param=null;
-const PILARES=[['metodo','MÉTODO','M',['inicio','calendario','coordinacion','metodologia','planificacion','biblioteca','lecturas']],['cancha','CANCHA','C',['pizarra','videoanalisis','analisis']],['equipo','EQUIPO','E',['plantel','partido','fixture','rendimiento','asistencia','cargas','evaluaciones']]];
+const PILARES=[['metodo','MÉTODO','M',['planificacion','biblioteca','metodologia','coordinacion','lecturas']],['cancha','CANCHA','C',['pizarra','videoanalisis','analisis']],['equipo','EQUIPO','E',['plantel','partido','fixture','rendimiento','asistencia','cargas','evaluaciones']]];
 const NOM_R=Object.fromEntries(RUTAS.filter(r=>r[1]));NOM_R.analisis='Análisis de rival';
 const DESC_PILAR={metodo:'Planificación · Biblioteca',cancha:'Pizarra · Video',equipo:'Plantel · Partidos · Estadísticas'};
 function pilarDe(r){const p=PILARES.find(x=>x[3].includes(r));return p?p[0]:''}
@@ -1749,7 +1817,46 @@ function pintarMenu(){
    const ms=misCats(),todas=miRol()==='coord'&&cats().length>1,a=catAct();
    cb.innerHTML=ms.length>1||todas?`<label style="display:block;padding:0 16px 12px"><span style="display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9C968A;margin-bottom:4px">Categoría</span><select id="catSel" style="width:100%;background:#26251F;color:#FAF8F3;border:1px solid #3A3833">${todas?`<option value="todas" ${a==='todas'?'selected':''}>Todo el club</option>`:''}${ms.map(c=>`<option value="${c.id}" ${a===c.id?'selected':''}>${esc(c.nombre)}</option>`).join('')}</select></label>`:'';
    const se=$('#catSel');if(se)se.onchange=e=>{elegirCat(e.target.value);if(ruta==='partido')param=null;pintar();aviso('Viendo: '+CATN())}}
+  pintarNavS01();
 }
+/* ---------- Sector 01 · navegación: barra inferior (celular y tablet vertical) y menú lateral plegable (compu y tablet horizontal) ---------- */
+const NOM_PIL={metodo:'Método',cancha:'Cancha',equipo:'Equipo'},COL_PIL={metodo:'var(--met)',cancha:'var(--can)',equipo:'var(--equ)'};
+function destPilar(k){const rs=rutasPilar(k);return ULT_PILAR[k]&&rs.includes(ULT_PILAR[k])?ULT_PILAR[k]:rs[0]}
+function prefLat(){try{return localStorage.getItem('mtk_lat_plegado')}catch(e){return null}}
+function modoNav(){const w=innerWidth,h=innerHeight,abajo=(h>=w&&w<=1100)||(w<=900&&h>500),b=document.body;
+  const pr=prefLat(),pl=pr==='1'||(pr!=='0'&&(h<=500||w<1100));
+  if(b.dataset.nav!==(abajo?'abajo':'lado'))b.dataset.nav=abajo?'abajo':'lado';
+  if(b.dataset.lat!==(pl?'plegado':'abierto'))b.dataset.lat=pl?'plegado':'abierto';
+  {const f=document.getElementById('mtkFranjaPrueba');document.documentElement.style.setProperty('--franja',(f?f.offsetHeight:0)+'px')}
+  const t=document.getElementById('mlPl');if(t){t.setAttribute('aria-expanded',pl?'false':'true');t.setAttribute('aria-label',pl?'Desplegar el menú':'Plegar el menú');t.title=t.getAttribute('aria-label')}}
+window.addEventListener('resize',modoNav);window.addEventListener('orientationchange',()=>setTimeout(modoNav,60));
+function altoBarraInf(){const b=document.getElementById('barraInf');if(!b||getComputedStyle(b).display==='none')return 0;return b.getBoundingClientRect().height}
+function icoS01(r){return `<svg viewBox="0 0 24 24" aria-hidden="true">${ICO[ICO_R[r]]||''}</svg>`}
+function hojaPilar(k){const rs=rutasPilar(k);
+  modal(NOM_PIL[k],`<div class="hoja-pil" style="--bc:${COL_PIL[k]}">${rs.map(r=>`<button class="hp-b ${ruta===r?'activo':''}" data-r="${r}" ${ruta===r?'aria-current="page"':''}>${icoS01(r)}<span>${esc(NOM_R[r]||r)}</span></button>`).join('')}</div>`,
+    {alMontar:m=>$$('[data-r]',m).forEach(b=>b.onclick=()=>{cerrarModal();if(b.dataset.r!==ruta)ir(b.dataset.r)})})}
+function pintarNavS01(){const pa=pilarDe(ruta);
+  /* barra inferior */
+  let bi=document.getElementById('barraInf');if(!bi){bi=document.createElement('nav');bi.id='barraInf';bi.setAttribute('aria-label','Navegación principal');document.body.appendChild(bi)}
+  const it=(id,txt,ic,act,col,extra='')=>`<button data-bi="${id}" class="${act?'activo':''}" style="--bc:${col}" ${act?'aria-current="page"':''} ${extra}>${ic}<span>${txt}</span></button>`;
+  bi.innerHTML=it('inicio','Inicio',icoS01('inicio'),ruta==='inicio','var(--tinta)')+it('calendario','Agenda',icoS01('calendario'),ruta==='calendario','var(--tinta)')
+    +PILARES.map(([k,,L])=>it(k,NOM_PIL[k],`<i class="pl" aria-hidden="true">${L}</i>`,pa===k,COL_PIL[k],pa===k?`aria-label="${NOM_PIL[k]}: ver todas sus secciones" aria-haspopup="dialog"`:'')).join('');
+  $$('[data-bi]',bi).forEach(b=>b.onclick=()=>{const id=b.dataset.bi;if(id==='inicio'||id==='calendario'){if(ruta!==id)ir(id);else window.scrollTo(0,0);return}if(pilarDe(ruta)===id)hojaPilar(id);else ir(destPilar(id))});
+  /* menú lateral */
+  let ml=document.getElementById('menuLat');if(!ml){ml=document.createElement('aside');ml.id='menuLat';ml.setAttribute('aria-label','Menú');const v=document.getElementById('vista');v.parentNode.insertBefore(ml,v)}
+  const a=r=>`<a href="#${r}" data-ml="${r}" class="ml-a ${ruta===r?'activo':''}" title="${esc(NOM_R[r]||r)}" ${ruta===r?'aria-current="page"':''}>${icoS01(r)}<span class="ml-t">${esc(r==='calendario'?'Agenda':(NOM_R[r]||r))}</span></a>`;
+  ml.innerHTML=`<button id="mlPl" class="ml-pl" aria-controls="menuLat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="ml-t">Menú</span></button>`
+    +`<div class="ml-g">${a('inicio')}${a('calendario')}</div>`
+    +PILARES.map(([k,t])=>`<div class="ml-g" style="--pc:${COL_PIL[k]}"><div class="ml-h ${pa===k?'activo':''}"><i aria-hidden="true"></i><span class="ml-t">${t}</span></div>${rutasPilar(k).map(a).join('')}</div>`).join('');
+  $$('[data-ml]',ml).forEach(x=>x.onclick=e=>{e.preventDefault();if(x.dataset.ml!==ruta)ir(x.dataset.ml)});
+  $('#mlPl',ml).onclick=()=>{const pl=document.body.dataset.lat==='plegado';try{localStorage.setItem('mtk_lat_plegado',pl?'0':'1')}catch(e){}modoNav()};
+  /* contexto compacto (celular): club, categoría y temporada, con selector si hay más de una */
+  const lat=$('.lateral');if(lat){let cx=document.getElementById('ctxNav');if(!cx){cx=document.createElement('div');cx.id='ctxNav';const mc=$('.marca',lat);mc.insertAdjacentElement('afterend',cx)}
+    const c=S.club||{},ms=misCats(),todas=miRol()==='coord'&&cats().length>1,ac=catAct(),hay=ms.length>1||todas;
+    cx.innerHTML=`<div class="esc">${c.escudo?`<img src="${c.escudo}" alt="">`:esc((c.nombre||'?').replace(/^(Club|Atlético|Deportivo)\s+/gi,'')[0]||'C')}</div><div class="cx-t"><small>${c.temporada?esc(c.temporada)+' · ':''}${esc(c.nombre||'')}</small><b>${esc(CATN())}${hay?' <span aria-hidden="true">▾</span>':''}</b></div>`
+      +(hay?`<select id="catSel2" aria-label="Categoría: ${esc(CATN())}. Cambiar categoría">${todas?`<option value="todas" ${ac==='todas'?'selected':''}>Todo el club</option>`:''}${ms.map(x=>`<option value="${x.id}" ${ac===x.id?'selected':''}>${esc(x.nombre)}</option>`).join('')}</select>`:'');
+    const s2=$('#catSel2',cx);if(s2)s2.onchange=e=>{elegirCat(e.target.value);if(ruta==='partido')param=null;pintar();aviso('Viendo: '+CATN())}}
+  modoNav()}
 const VISTAS={};
 function marcarSubnav(){$$('.subnav').forEach(n=>{const upd=()=>{n.classList.toggle('mas-der',n.scrollWidth-n.scrollLeft-n.clientWidth>4);n.classList.toggle('mas-izq',n.scrollLeft>4)};const a=$('a.activo',n);if(a&&n.scrollWidth>n.clientWidth){const x=a.offsetLeft-n.offsetLeft-24;if(x>0)n.scrollLeft=x}upd();if(!n._sc){n._sc=1;n.addEventListener('scroll',upd,{passive:true})}})}
 function pintar(){
@@ -4171,12 +4278,12 @@ function arqTxt(){return RAMA()==='M'?'Arquero':RAMA()==='F'?'Arquera':'Arquera/
 /* La cancha usa todo el alto que hay en la pantalla (sin tener que bajar) */
 function ajustarPzAlto(){const w=$('#pizWrap'),sv=$('#cancha>svg');if(!w||!sv)return;
   if(innerWidth<=800){w.style.removeProperty('--pzh');return}
-  if(w.classList.contains('pz-emb')){const cab=(document.body.classList.contains('en-pizarra')&&innerHeight<860)?0:(($('.lateral')||{}).offsetHeight||0);w.style.setProperty('--pzEmbH',Math.max(440,innerHeight-cab-14)+'px');const tp=$('.pzA-top',w);if(tp)w.style.setProperty('--pzTopH',tp.offsetHeight+'px');return}
+  if(w.classList.contains('pz-emb')){const cab=(document.body.classList.contains('en-pizarra')&&innerHeight<860)?0:(($('.lateral')||{}).offsetHeight||0);w.style.setProperty('--pzEmbH',Math.max(440,innerHeight-cab-14-altoBarraInf())+'px');const tp=$('.pzA-top',w);if(tp)w.style.setProperty('--pzTopH',tp.offsetHeight+'px');return}
   const cab=PZ_FULL||(document.body.classList.contains('en-pizarra')&&innerHeight<860)?0:(($('.lateral')||{}).offsetHeight||0);
   const off=sv.getBoundingClientRect().top-w.getBoundingClientRect().top,g=$('.pz-guia,.pz-guia-mini',w),tl=$('.pzA-tl',w);
   const abajo=(g?g.offsetHeight+10:0)+(tl?tl.offsetHeight:0)+18;
   const arriba=Math.max(sv.getBoundingClientRect().top,cab+off);
-  w.style.setProperty('--pzh',Math.max(280,Math.round(innerHeight-arriba-abajo))+'px')}
+  w.style.setProperty('--pzh',Math.max(280,Math.round(innerHeight-arriba-abajo-altoBarraInf()))+'px')}
 window.addEventListener('resize',()=>{if(ruta!=='pizarra')return;const w=$('#pizWrap');if(w&&!PZ_FULL&&w.classList.contains('pz-emb')!==pzEmb()){pintar();return}ajustarPzAlto()});
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&PZ_FULL&&ruta==='pizarra'&&!document.getElementById('presOv'))ponerAmplia(false)});
 VISTAS.pizarra=el=>{
