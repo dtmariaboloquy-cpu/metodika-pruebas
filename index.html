@@ -1361,6 +1361,75 @@ body[data-ruta=inicio] #cont .panel .btn{min-height:44px}
 }
 /* subtítulos de cada sección en modo claro: el color del pilar, más oscuro */
 :root[data-theme="light"] .cab .eyebrow{filter:brightness(.8)}
+
+/* ===== S01·C1 · Pizarra: controles táctiles de 44 px ===== */
+@media (pointer:coarse){
+  .pzA .pz-rapida .pr-b{min-width:44px;justify-content:center}
+  .pzA .pzA-tl .pa.chico,.pzA .pzA-tl .pzA-play{min-width:44px;min-height:44px}
+  .pzA .pzA-props .pa,.pzA .pzA-props .pa.chico{min-height:44px}
+  .pzA #escMenos,.pzA #escMas{min-width:44px;min-height:44px}
+  .pzA .pzA-chk{min-height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 4px;cursor:pointer}
+  .pzA .pzA-chk input[type=checkbox]{width:22px;height:22px;margin:0}
+}
+
+/* ===== S01·C2 · Contraste: casos restantes ===== */
+/* escudo del club en la barra del celular: amarillo sobre fondo oscuro en los dos modos */
+#ctxNav .esc{background:#141412!important;color:#FFD400!important}
+/* días sin sesión y días de otro mes: se atenúan menos (el texto sigue leyéndose) */
+.mp-dia.off{opacity:1!important;border-style:dashed!important}
+.mp-dia.off .mp-cab b,.mp-dia.off .mp-libre{color:var(--tenue)!important}
+.cal-c.fuera{opacity:1!important}
+.cal-c.fuera .cal-n{color:var(--tenue)!important}
+.cal-c.fuera>*:not(.cal-n){opacity:.75}
+/* iniciales de rivales sin escudo en modo oscuro */
+:root[data-theme="dark"] [style*="background:var(--tinta);color:var(--amarillo)"]{color:var(--carta)!important}
+/* colores fijos de Rendimiento (ganados, empatados, perdidos) */
+:root[data-theme="light"] [style*="color:#2E9E5B" i]{color:#1D6B43!important}
+:root[data-theme="light"] [style*="color:#E0A100" i]{color:#7E5600!important}
+:root[data-theme="light"] [style*="color:#D0402F" i]{color:#992F1C!important}
+:root[data-theme="dark"] [style*="color:#D0402F" i]{color:#F0907A!important}
+:root[data-theme="dark"] [style*="color:#2E9E5B" i]{color:#5FCB8A!important}
+
+/* ===== S01·C3 · Plantel compacto en el celular ===== */
+.pl-fbtn{display:none!important}
+body[data-nav=abajo] .pl-filtros{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;gap:8px}
+body[data-nav=abajo] .pl-filtros input[type=search]{grid-column:auto!important}
+body[data-nav=abajo] .pl-fbtn{display:inline-flex!important;min-height:44px}
+body[data-nav=abajo] .pl-fbtn.activo{border-color:var(--equ)}
+body[data-nav=abajo] .pl-filtros #selModo{grid-column:auto!important;min-height:44px;padding-inline:10px;font-size:0}
+body[data-nav=abajo] .pl-filtros #selModo::before{content:"☑ Varias";font-size:14px}
+body[data-nav=abajo] .pl-filtros #selModo.pri::before{content:"✕ Listo";font-size:14px}
+body[data-nav=abajo] .pl-fsel{display:none}
+body[data-nav=abajo] .pl-fsel.ver{display:block;grid-column:span 3}
+body[data-nav=abajo] .pl-filtros{margin-bottom:12px}
+@media (pointer:coarse){.cj-foto .addf{min-height:44px;display:inline-flex!important;align-items:center}}
+
+/* ===== S01·C4 · Mis pizarras desde la pantalla amplia ===== */
+.pz-mis-b{display:none!important}
+.pzA.piz-full .pz-mis-b{display:inline-flex!important}
+
+/* ===== S01·C5 · Pizarra: sin barra inferior mientras se edita ===== */
+.pz-salir{display:none}
+body[data-nav=abajo][data-ruta=pizarra].pz-edit #barraInf{display:none!important}
+body[data-nav=abajo][data-ruta=pizarra].pz-edit main{padding-bottom:calc(24px + var(--franja,0px) + env(safe-area-inset-bottom,0px))!important}
+body[data-nav=abajo][data-ruta=pizarra].pz-edit .pz-salir{display:inline-flex;align-items:center;min-height:48px;padding:0 14px 0 4px;margin-right:4px;background:none;border:0;border-right:1px solid var(--linea);color:var(--tinta);font:700 15px var(--f-t);cursor:pointer}
+body[data-nav=abajo][data-ruta=pizarra] .pz-tabs{position:sticky;top:0;z-index:30;background:var(--suelo);margin-inline:-16px;padding-inline:12px}
+
+/* ===== S01·C6 · Mis herramientas ===== */
+.mis-herr{margin-bottom:16px}
+.mh-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mh-b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:72px;padding:10px 4px;border:1px solid var(--linea);border-radius:14px;background:var(--carta2);color:var(--tinta);font:600 13px var(--f-t);cursor:pointer;text-align:center;box-shadow:inset 0 3px 0 var(--pc)}
+.mh-b svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mh-b span{overflow:hidden;text-overflow:ellipsis;max-width:100%;white-space:nowrap}
+.mh-b:hover{border-color:var(--tinta)}
+@media (max-width:480px){.mh-g{grid-template-columns:repeat(3,minmax(0,1fr))}.mh-b{min-height:64px}}
+@media (max-width:380px){.mh-b{font-size:12px;padding-inline:2px}}
+@media (min-width:1100px){.mh-g{grid-template-columns:repeat(8,minmax(0,1fr))}}
+.mh-grupo{margin-bottom:10px}.mh-grupo .etq{margin-bottom:4px}
+.mh-op{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 6px;border-radius:8px;cursor:pointer}
+.mh-op svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mh-op input{width:20px;height:20px}
+.mh-op:has(input:disabled){opacity:.6}
 </style>
 
 <div class="app">
@@ -1909,7 +1978,7 @@ function rutasPilar(k){const p=PILARES.find(x=>x[0]===k);return p?p[3].filter(r=
 function subnavHtml(){const k=pilarDe(ruta);if(!k)return '';return `<nav class="subnav" aria-label="Secciones de ${k}">${rutasPilar(k).map(r=>`<a data-sub="${r}" class="${ruta===r?'activo':''}">${esc(NOM_R[r]||r)}</a>`).join('')}</nav>`}
 /* ---------- Historial: el botón «atrás» (navegador, celular y app instalada) vuelve a la pantalla anterior
    y, si hay una ventana abierta, primero la cierra. ---------- */
-let HIST_POP=false,HIST_IGNORAR=0;const CAPAS_H=[];let CAPA_POP=false;
+var RUTA_ANT='';let HIST_POP=false,HIST_IGNORAR=0;const CAPAS_H=[];let CAPA_POP=false;
 function modalAbierto(){const c=document.getElementById('capaModal');return !!(c&&c.firstElementChild)}
 function stParam(p){try{return p==null?null:JSON.parse(JSON.stringify(p))}catch(e){return null}}
 function hPush(st,url){try{const h=history.state;if(h&&h.mtk&&(h.modal||h.capa)&&!modalAbierto()&&!CAPAS_H.length)history.replaceState(st,'',url);else history.pushState(st,'',url)}catch(e){}}
@@ -1930,7 +1999,7 @@ window.addEventListener('popstate',e=>{const st=e.state;
   if(r===ruta&&JSON.stringify(p)===JSON.stringify(stParam(param)))return;
   HIST_POP=true;try{ir(r,p)}finally{HIST_POP=false}});
 function ir(r,p=null){try{if(typeof PZ_SESION!=='undefined'&&typeof ruta!=='undefined'&&ruta==='pizarra'&&r!=='pizarra')PZ_SESION=null;if(typeof ruta!=='undefined'&&ruta==='pizarra'&&r!=='pizarra'&&typeof PZ!=='undefined'&&PZ){const desdeP=!!PZ_PARTIDO,existe=S.pizarras.some(x=>x.id===PZ.id);if((desdeP||existe)&&guardarPzAuto())aviso('Pizarra guardada');PZ_PARTIDO=null}}catch(e){console.warn(e)}if(r!=='pizarra'&&typeof PZ_FULL!=='undefined'&&PZ_FULL){PZ_FULL=false;document.body.classList.remove('pz-fs')}if(r==='pizarra'&&ruta!=='pizarra'&&innerWidth>800){let a=null;try{a=localStorage.getItem('mtk_pz_amplia')}catch(e){}if(a==='1'||(a==null&&innerHeight<900)){PZ_FULL=true;document.body.classList.add('pz-fs')}}
-  const _mismaR=ruta===r;if(ruta==='biblioteca'&&!_mismaR)BIB_Y=scrollY;ruta=r;param=p;if(!HIST_POP)histRuta(_mismaR);pintar();window.scrollTo(0,(HIST_POP&&r==='biblioteca'&&!_mismaR&&typeof BIB_Y!=='undefined')?BIB_Y:0);
+  const _mismaR=ruta===r;if(!_mismaR)RUTA_ANT=ruta;if(ruta==='biblioteca'&&!_mismaR)BIB_Y=scrollY;if(ruta==='pizarra'&&!_mismaR&&typeof PZ_VOLVER_AMPLIA!=='undefined')PZ_VOLVER_AMPLIA=false;ruta=r;param=p;if(!HIST_POP)histRuta(_mismaR);pintar();window.scrollTo(0,(HIST_POP&&r==='biblioteca'&&!_mismaR&&typeof BIB_Y!=='undefined')?BIB_Y:0);
   if(r==='pizarra'&&!PZ_FULL)setTimeout(()=>{const w=$('#pizWrap');if(!w)return;const cab=innerWidth<=800||innerHeight<860?0:(($('.lateral')||{}).offsetHeight||0);window.scrollTo(0,Math.max(0,w.getBoundingClientRect().top+scrollY-cab-6));ajustarPzAlto()},60)}
 function pintarMenu(){
   const pa=pilarDe(ruta);if(pa)ULT_PILAR[pa]=ruta;
@@ -2062,6 +2131,24 @@ function revisarRecordatorios(){try{
   modal('Recordatorio',`<div style="display:grid;gap:8px">${nuevos.map(e=>`<div class="fila" style="border:1px solid var(--linea);border-radius:10px;padding:10px 12px"><b style="color:${e.f===hoy?'var(--rojo)':'inherit'};min-width:64px">${e.f===hoy?'Hoy':'Mañana'}</b><span style="flex:1">🔔 ${esc(e.tx)}${e.h?' · '+esc(e.h)+' h':''}</span></div>`).join('')}</div><div class="modal-pie"><button class="btn" data-cerrar>Entendido</button><button class="btn pri" id="recCal">Ver calendario</button></div>`,{alMontar:m=>{$('#recCal',m).onclick=()=>{cerrarModal();CAL.ref=hoy;CAL.dia=nuevos[0].f;ir('calendario')}}});
 }catch(e){console.warn('recordatorios',e)}}
 function abrirEvCal(t,id){if(t==='ev')return editarEvento(id);if(t==='ses')return verSesion(id);if(t==='par')return ir('partido',id);ir('plantel',id)}
+/* ---------- Sector 01 · Mis herramientas (Inicio) ---------- */
+const HERR_DEF=['planificacion','biblioteca','pizarra','videoanalisis','plantel','asistencia','cargas','partido'],HERR_MAX=8;
+function claveHerr(){const u=(typeof USR!=='undefined'&&USR&&USR.uid)||'local';return 'mtk_herr_'+((typeof CLUB!=='undefined'&&CLUB)||'local')+'_'+u}
+function herrDisponibles(){return [...PILARES.flatMap(x=>rutasPilar(x[0])),'calendario']}
+function misHerramientas(){const disp=herrDisponibles();let l=null;try{l=JSON.parse(localStorage.getItem(claveHerr())||'null')}catch(e){}
+  if(!Array.isArray(l))l=HERR_DEF;return l.filter(r=>disp.includes(r)).slice(0,HERR_MAX)}
+function panelHerramientas(){const l=misHerramientas();
+  return `<div class="panel mis-herr"><div class="panel-cab"><h3>Mis herramientas</h3><button class="btn chico" id="herrEd" style="margin-left:auto" aria-haspopup="dialog">Editar</button></div>
+  <div class="mh-g">${l.map(r=>{const k=pilarDe(r);return `<button class="mh-b" data-herr="${r}" style="--pc:${k?COL_PIL[k]:'var(--tinta)'}">${icoS01(r)}<span>${esc(r==='calendario'?'Agenda':r==='pizarra'?'Pizarra':(NOM_R[r]||r))}</span></button>`}).join('')}</div></div>`}
+function editarHerramientas(){const disp=herrDisponibles(),act=misHerramientas();
+  const grupo=(t,rs)=>rs.length?`<div class="mh-grupo"><div class="etq">${t}</div>${rs.map(r=>`<label class="mh-op"><input type="checkbox" value="${r}" ${act.includes(r)?'checked':''}> ${icoS01(r)} ${esc(r==='calendario'?'Agenda':(NOM_R[r]||r))}</label>`).join('')}</div>`:'';
+  modal('Mis herramientas',`<p class="sub" style="margin:0 0 12px">Elegí hasta ${HERR_MAX} accesos para tu Inicio. Es tu elección: no cambia lo que ven otras personas del club.</p>
+    ${grupo('Agenda',['calendario'].filter(r=>disp.includes(r)))}${PILARES.map(([k,t])=>grupo(t,rutasPilar(k))).join('')}
+    <p class="sub" id="mhCuenta" style="margin:10px 0 0"></p>
+    <div class="modal-pie"><button class="btn fantasma" id="mhDef">Volver a los de siempre</button><button class="btn" data-cerrar>Cancelar</button><button class="btn pri" id="mhOk">Guardar</button></div>`,
+    {alMontar:m=>{const cajas=$$('input[type=checkbox]',m);const upd=()=>{const n=cajas.filter(c=>c.checked).length;cajas.forEach(c=>c.disabled=!c.checked&&n>=HERR_MAX);$('#mhCuenta',m).textContent=n+' de '+HERR_MAX+' elegidas'+(n>=HERR_MAX?' (máximo)':'');$('#mhOk',m).disabled=!n};cajas.forEach(c=>c.onchange=upd);upd();
+      $('#mhDef',m).onclick=()=>{cajas.forEach(c=>c.checked=HERR_DEF.includes(c.value));upd()};
+      $('#mhOk',m).onclick=()=>{const sel=herrDisponibles().filter(r=>cajas.some(c=>c.checked&&c.value===r));try{localStorage.setItem(claveHerr(),JSON.stringify(sel))}catch(e){}cerrarModal();pintar();aviso('Listo: tus herramientas quedaron guardadas')}}})}
 VISTAS.calendario=el=>{
   const ref=CAL.ref?deIso(CAL.ref):new Date(HOY);const hoyI=iso(HOY);
   let d0,d1,tit;
@@ -2496,8 +2583,8 @@ VISTAS.plantel=el=>{
   const lista=ordenJ(SJ().filter(j=>(!filtroPos||j.posicion===filtroPos)&&(!filtroCat||j.categoria===filtroCat)));
   const minTot=minutosEquipo();
   el.innerHTML=cabecera(SJ().length+' '+J('pl'),'Plantel','',`<button class="btn pl-mas" id="plMas" aria-expanded="${PL_MAS?'true':'false'}" aria-controls="plHerr">⋯ Más</button><div class="pl-herr" id="plHerr" ${PL_MAS?'':'hidden'}>${SJ().length>1?`<button class="btn" id="cmpJ">⇄ Comparar ${J('pl')}</button>`:''}${SJ().length?`<button class="btn" id="tablaPdf">⬇ Tabla PDF</button><button class="btn" id="tablaXls">⬇ Tabla Excel</button>`:''}<button class="btn" id="impJ">⬆ Importar desde Excel</button>${SJ().length?'<button class="btn" id="impEst">📊 Estadísticas</button>':''}${SJ().length?'<button class="btn" id="fotosJ">📷 Cargar fotos</button>':''}${!SELJ&&SJ().length?`<button class="btn" id="plObj">🎯 Objetivos del plantel</button><button class="btn" id="plLinks">📲 Links a ${J('pl')}</button>${usaCiclo()?'<button class="btn" id="plCic">🔴 Ciclo del plantel</button>':''}`:''}</div><button class="btn pri" id="nuevaJ">＋ Agregar ${J('sg')}</button>`)+
-  marcadorPlantel()+`<div class="filtros pl-filtros">${SJ().length?`<input type="search" id="fBusJ" placeholder="Buscar ${J('sg')}" aria-label="Buscar ${J('sg')} por nombre" value="${esc(BUS_J)}">`:''}<select id="fPos" style="width:auto" aria-label="Filtrar por posición"><option value="">Todas las posiciones</option>${opts(POSICIONES.map(p=>[p,posTxt(p)]),filtroPos)}</select>
-   <select id="fCat" style="width:auto" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option>${opts(cats,filtroCat)}</select>${SJ().length?`<button class="btn ${SELJ?'pri':''}" id="selModo" style="margin-left:auto">${SELJ?'✕ Terminar selección':'☑ Seleccionar varias'}</button>`:''}</div>`+(SELJ?`<div class="selj-barra"><b>${SELJ.size}</b> ${SELJ.size===1?'elegida':'elegidas'}<span class="sub">Tocá las tarjetas para elegir</span><span style="flex:1"></span><button class="btn chico" id="selTodas">${lista.length&&lista.every(j=>SELJ.has(j.id))?'Ninguna':'Todas'}</button><button class="btn chico peligro" id="selBorrar" ${SELJ.size?'':'disabled'}>🗑 Eliminar ${SELJ.size||''}</button></div>`:'')+
+  marcadorPlantel()+`<div class="filtros pl-filtros">${SJ().length?`<input type="search" id="fBusJ" placeholder="Buscar ${J('sg')}" aria-label="Buscar ${J('sg')} por nombre" value="${esc(BUS_J)}">`:''}${SJ().length?`<button type="button" class="btn pl-fbtn ${PL_FIL||filtroPos||filtroCat?'activo':''}" id="fVerJ" aria-expanded="${!!(PL_FIL||filtroPos||filtroCat)}" aria-controls="fPos fCat">⚙ Filtros${[filtroPos,filtroCat].filter(Boolean).length?' ('+[filtroPos,filtroCat].filter(Boolean).length+')':''}</button>`:''}<select id="fPos" class="pl-fsel ${PL_FIL||filtroPos||filtroCat?'ver':''}" style="width:auto" aria-label="Filtrar por posición"><option value="">Todas las posiciones</option>${opts(POSICIONES.map(p=>[p,posTxt(p)]),filtroPos)}</select>
+   <select id="fCat" class="pl-fsel ${PL_FIL||filtroPos||filtroCat?'ver':''}" style="width:auto" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option>${opts(cats,filtroCat)}</select>${SJ().length?`<button class="btn ${SELJ?'pri':''}" id="selModo" style="margin-left:auto">${SELJ?'✕ Terminar selección':'☑ Seleccionar varias'}</button>`:''}</div>`+(SELJ?`<div class="selj-barra"><b>${SELJ.size}</b> ${SELJ.size===1?'elegida':'elegidas'}<span class="sub">Tocá las tarjetas para elegir</span><span style="flex:1"></span><button class="btn chico" id="selTodas">${lista.length&&lista.every(j=>SELJ.has(j.id))?'Ninguna':'Todas'}</button><button class="btn chico peligro" id="selBorrar" ${SELJ.size?'':'disabled'}>🗑 Eliminar ${SELJ.size||''}</button></div>`:'')+
   
   (!SELJ&&!filtroPos&&!filtroCat?panelNoDisp():'')+(lista.length?(()=>{const CT=coloresTarjeta();el.style.setProperty('--ct-osc',CT.osc);el.style.setProperty('--ct-clr',CT.clr);const carta=j=>{const a=asistJugador(j.id),st=statsJugador(j.id),pm=minTot?Math.round(100*st.min/minTot):0,col=pm>=60?'var(--verde)':pm>=25?'var(--ambar)':'var(--rojo)';return `<button class="cj ${SELJ?'selmodo':''} ${SELJ&&SELJ.has(j.id)?'sel':''}" data-id="${j.id}">${SELJ?`<span class="cj-check">${SELJ.has(j.id)?'✓':''}</span>`:''}<div class="cj-foto" style="${j.foto?'':'background:'+CT.fondo}">${j.foto?`<img src="${j.foto}" alt="">`:`<span class="ini">${esc(iniciales(j))}</span><span class="addf" data-foto="${j.id}" role="button" title="Agregar foto">📷 Agregar foto</span>`}<span class="cj-dor">${j.dorsal||'–'}</span>${j.foto?`<span class="camf" data-foto="${j.id}" role="button" title="Cambiar foto">📷</span>`:''}</div><div class="cj-txt" style="min-width:0"><b>${esc(j.nombre+' '+j.apellido)}</b><small>${esc(puestoTxt(j))}</small><div class="chips" style="margin-top:5px">${chipEstado(j,true)}<span class="chip">${esc(j.categoria||'—')}</span>${a.t?`<span class="chip ${a.pct>=85?'ok':a.pct>=70?'aviso':'mal'}">${a.pct}% asist.</span>`:''}</div>${minTot?`<div class="mini"><span><b>${st.pj}</b> PJ</span><span><b>${st.gol}</b> ${st.gol===1?"gol":"goles"}</span><span><b>${st.asis}</b> asist.</span></div><div class="minbar"><div class="lbl"><span>Minutos</span><span>${pm}%</span></div><div class="barra"><i style="width:${pm}%;background:${col}"></i></div></div>`:''}</div></button>`};
     if(filtroPos)return `<div class="cartas-j">${lista.map(carta).join('')}</div>`;
@@ -2520,9 +2607,10 @@ VISTAS.plantel=el=>{
   $$('.cj',el).forEach(b=>b.onclick=ev=>{if(SELJ){const id=b.dataset.id;SELJ.has(id)?SELJ.delete(id):SELJ.add(id);const y=scrollY;pintar();scrollTo(0,y);return}const f=ev.target.closest('[data-foto]');if(f){ev.stopPropagation();fotoRapida(f.dataset.foto);return}ir('plantel',b.dataset.id)});
   const fm=$('#fotosJ');if(fm)fm.onclick=()=>cargarFotosMasivo();
   {const mb=$('#plMas',el),hz=$('#plHerr',el);if(mb&&hz)mb.onclick=()=>{PL_MAS=hz.hidden;hz.hidden=!PL_MAS;mb.setAttribute('aria-expanded',PL_MAS?'true':'false');if(PL_MAS){const b=$('button',hz);if(b)b.focus()}}}
+  {const fv=$('#fVerJ',el);if(fv)fv.onclick=()=>{PL_FIL=!(PL_FIL||filtroPos||filtroCat);if(!PL_FIL&&(filtroPos||filtroCat)){PL_FIL=true}const y=scrollY;pintar();scrollTo(0,y);const s1=$('#fPos');if(PL_FIL&&s1)s1.focus()}}
   {const bj=$('#fBusJ',el);if(bj){bj.oninput=()=>{BUS_J=bj.value;filtrarBusJ(el)};if(BUS_J)filtrarBusJ(el)}}
 };
-let PL_MAS=false,BUS_J='';
+let PL_MAS=false,BUS_J='',PL_FIL=false;
 function normBus(t){return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function filtrarBusJ(el){const q=normBus(BUS_J).trim();let vis=0;
   $$('.cj',el).forEach(c=>{const j=jugador(c.dataset.id),t=j?normBus(j.nombre+' '+j.apellido+' '+(j.dorsal||'')):normBus(c.textContent);const ok=!q||t.includes(q);c.hidden=!ok;if(ok)vis++});
@@ -4380,7 +4468,10 @@ let MULTI=new Set(),UNIR_A=null;
 function pzEmb(){return !PZ_FULL&&innerWidth>900}
 let PZ_FULL=false,PZ_PANEL=false,PZ_OPC=false,TRAY=null,fut=[];
 let PZ=null,herr='mover',hist=[],FR=0,SEL=null,colorJ='#FFD400',colorZ='#FFFFFF',animando=null,fCatPz='',fCarpeta='';
-let PZ_PARTIDO=null,PZ_SESION=null,PZ_TAB='editar';
+let PZ_PARTIDO=null,PZ_SESION=null,PZ_TAB='editar',PZ_VOLVER_AMPLIA=false;
+function amplia_sinPref(on){let prev=null;try{prev=localStorage.getItem('mtk_pz_amplia')}catch(e){}ponerAmplia(on);try{prev==null?localStorage.removeItem('mtk_pz_amplia'):localStorage.setItem('mtk_pz_amplia',prev)}catch(e){}}
+function irMisPizarras(){PZ_VOLVER_AMPLIA=!!PZ_FULL;PZ_TAB='mis';amplia_sinPref(false);window.scrollTo(0,0)}
+function volverAmplia(){if(PZ_VOLVER_AMPLIA){PZ_VOLVER_AMPLIA=false;amplia_sinPref(true)}}
 function irPz(p,tab,id){PZ_PARTIDO={id:p.id,tab};ir('pizarra',id)}
 /* antes de cambiar de pizarra, guardar la que estaba si tenía cambios (para no perder trabajo) */
 function resguardarPz(){try{if(!PZ)return;const i=S.pizarras.findIndex(x=>x.id===PZ.id);const sucio=i>=0?firmaPz(S.pizarras[i])!==firmaPz(PZ):(PZ._firmaPl?firmaPz(PZ)!==PZ._firmaPl:(PZ.elementos.length||PZ.flechas.length||PZ.textos.length||PZ.zonas.length));if(sucio&&guardarPzAuto()){const n=PZ.nombre||'el ejercicio';setTimeout(()=>aviso('Guardé “'+n+'” antes de abrir otro'),50)}}catch(e){console.warn(e)}}
@@ -4446,7 +4537,7 @@ VISTAS.pizarra=el=>{
   const espTxt=zMay?`${+zMay.w.toFixed(1)} × ${+zMay.h.toFixed(1)} m`:`${Wc} × ${Hc} m`,area=zMay?areaZona(zMay):Wc*Hc,jEn=zMay?PZ.elementos.filter(e=>e.t==='J'&&dentroZona(zMay,...posEn(PZ,e,FR))).length:nJ;
   el.innerHTML=`<div class="pzA ${PZ_FULL?'piz-full':pzEmb()?'pz-emb':''} ${(PZ_FULL||pzEmb())&&PZ_PANEL?'panel-on':''}" id="pizWrap">
   <div class="pzA-top"><div class="pzA-logo">M</div><div class="pzA-tit"><input type="text" id="pzNombre" value="${esc(PZ.nombre)}" aria-label="Nombre del ejercicio"><div class="pzA-sub">${esc([S.club&&S.club.nombre,(()=>{try{return CATN()}catch(e){return ''}})()].filter(Boolean).join(' · ')||'Pizarra táctica')}</div></div>
-    <div class="pzA-acc">${PZ_SESION?'<button class="pa y" id="pzVolverS">✓ Guardar tarea y volver a la sesión</button>':''}${PZ_PARTIDO?'<button class="pa y" id="pzVolverP">← Guardar y volver al partido</button>':''}${PZ_FULL?`<button class="pa" id="pzSalirFull" title="Salir de la pizarra amplia (Esc)">${ic('x')} Salir</button>`:''}${PZ_FULL||pzEmb()?`<button class="pa ${PZ_PANEL?'y':''}" id="pzPanel" title="Mostrar u ocultar la consigna, las medidas y la ficha">${ic('panel')} Panel</button>`:''}<button class="pa" id="pzPres">${ic('play')} Presentar</button><button class="pa" id="pzVid">${ic('video')} Video</button><button class="pa" id="pzPng">${ic('bajar')} Exportar</button>${PZ_FULL||pzEmb()?'<button class="pa" id="pzMasB" title="Más opciones">⋯ Más</button>':''}<span class="pzA-sec" id="pzSec"><button class="pa" id="pzNueva">Nueva</button><button class="pa" id="pzPlant">Plantillas</button><button class="pa" id="pzShare">${ic('compartir')} Compartir</button><button class="pa" id="pzTarea">${ic('tarea')} A tarea</button><button class="pa" id="pzFotos" title="Mostrar u ocultar las fotos del plantel">${ic('foto')} ${PZ.sinFotos?'Sin fotos':'Fotos'}</button><button class="pa" id="pzVers" title="Volver a una versión guardada antes">${ic('reloj')} Versiones</button><button class="pa" id="pzAtajos" title="Atajos del teclado">⌨️ Atajos</button></span><button class="pa y" id="pzGuardar" title="Guardar (Ctrl+S)">${ic('check')} Guardar</button></div></div>
+    <div class="pzA-acc">${PZ_SESION?'<button class="pa y" id="pzVolverS">✓ Guardar tarea y volver a la sesión</button>':''}${PZ_PARTIDO?'<button class="pa y" id="pzVolverP">← Guardar y volver al partido</button>':''}${PZ_FULL?`<button class="pa" id="pzSalirFull" title="Salir de la pizarra amplia (Esc)">${ic('x')} Salir</button>`:''}${PZ_FULL||pzEmb()?`<button class="pa ${PZ_PANEL?'y':''}" id="pzPanel" title="Mostrar u ocultar la consigna, las medidas y la ficha">${ic('panel')} Panel</button>`:''}<button class="pa" id="pzPres">${ic('play')} Presentar</button><button class="pa" id="pzVid">${ic('video')} Video</button><button class="pa" id="pzPng">${ic('bajar')} Exportar</button>${PZ_FULL||pzEmb()?'<button class="pa" id="pzMasB" title="Más opciones">⋯ Más</button>':''}<span class="pzA-sec" id="pzSec"><button class="pa" id="pzNueva">Nueva</button><button class="pa" id="pzPlant">Plantillas</button><button class="pa" id="pzShare">${ic('compartir')} Compartir</button><button class="pa" id="pzTarea">${ic('tarea')} A tarea</button><button class="pa" id="pzFotos" title="Mostrar u ocultar las fotos del plantel">${ic('foto')} ${PZ.sinFotos?'Sin fotos':'Fotos'}</button><button class="pa" id="pzVers" title="Volver a una versión guardada antes">${ic('reloj')} Versiones</button><button class="pa" id="pzAtajos" title="Atajos del teclado">⌨️ Atajos</button></span><button class="pa pz-mis-b" id="pzMisB" title="Mis pizarras" aria-label="Mis pizarras: ${S.pizarras.length} guardadas">📁<span class="pz-mis-t"> Mis pizarras</span></button><button class="pa y" id="pzGuardar" title="Guardar (Ctrl+S)">${ic('check')} Guardar</button></div></div>
   <div class="pzA-body">
     <div class="pzA-dock">${barraPizarra()}</div>
     <div class="pzA-stage"><div class="pz-tray" id="pzTray" hidden></div>
@@ -4489,10 +4580,14 @@ VISTAS.pizarra=el=>{
   <div class="panel pz-guardados" id="pzGuardados" style="margin-top:16px"><div class="panel-cab"><h3>Ejercicios guardados</h3><span class="chip">${S.pizarras.length}</span><button class="btn chico pri" id="pzNuevaMis" style="margin-left:8px">＋ Nueva</button>
     <div class="der"><div class="seg">${[['','Todos'],...CATEG_PZ.map(c=>[c,c])].map(([v,t])=>`<button data-fcp="${esc(v)}" class="${fCatPz===v?'activo':''}">${t}</button>`).join('')}</div>${carpetas.length?`<select id="fCarp" style="width:auto" aria-label="Carpeta"><option value="">Todas las carpetas</option>${opts(carpetas,fCarpeta)}</select>`:''}</div></div>
   ${guardadas.length?`<div class="cartas-t cartas-pz" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">${guardadas.map(p=>`<div class="ct"><div class="mini">${svgPizarra(p,{mini:true})}</div><div class="cuerpo" style="padding:9px 10px;gap:5px"><b style="font-size:14px;line-height:1.2">${esc(p.nombre)}</b><div class="chips"><span class="chip">${esc(p.categoria)}</span>${p.carpeta?`<span class="chip">📁 ${esc(p.carpeta)}</span>`:''}${p.pasos.length?`<span class="chip ama">${plu(p.pasos.length+1,'paso','pasos')}</span>`:''}</div><span class="sub" style="font-size:12px">${esc(p.formato)}</span><div style="display:flex;gap:4px;margin-top:auto"><button class="btn chico" data-abrir="${p.id}">Abrir</button><button class="btn chico fantasma pz-del" data-borrarpz="${p.id}" aria-label="Borrar este ejercicio">🗑 Borrar</button></div></div></div>`).join('')}</div>`:'<div class="vacio">No hay ejercicios guardados en esta categoría.</div>'}</div>`;
-  el.insertAdjacentHTML('afterbegin',`<div class="pz-tabs" role="tablist" aria-label="Pizarra"><button role="tab" data-pztab="editar" aria-selected="${PZ_TAB!=='mis'}" class="${PZ_TAB!=='mis'?'activo':''}">✏️ Editar<small>${esc(PZ.nombre||'Ejercicio')}</small></button><button role="tab" data-pztab="mis" aria-selected="${PZ_TAB==='mis'}" class="${PZ_TAB==='mis'?'activo':''}">📁 Mis pizarras<small>${S.pizarras.length} guardadas</small></button></div>`);
+  document.body.classList.toggle('pz-edit',PZ_TAB!=='mis');
+  el.insertAdjacentHTML('afterbegin',`<div class="pz-tabs" role="tablist" aria-label="Pizarra"><button type="button" class="pz-salir" id="pzSalirEd" aria-label="Salir de la pizarra">← Salir</button><button role="tab" data-pztab="editar" aria-selected="${PZ_TAB!=='mis'}" class="${PZ_TAB!=='mis'?'activo':''}">✏️ Editar<small>${esc(PZ.nombre||'Ejercicio')}</small></button><button role="tab" data-pztab="mis" aria-selected="${PZ_TAB==='mis'}" class="${PZ_TAB==='mis'?'activo':''}">📁 Mis pizarras<small>${S.pizarras.length} guardadas</small></button></div>`);
   el.classList.toggle('pz-mis',PZ_TAB==='mis');
   $$('[data-pztab]',el).forEach(b=>b.onclick=()=>{if(PZ_TAB===b.dataset.pztab)return;PZ_TAB=b.dataset.pztab;pintar();window.scrollTo(0,0)});
-  {const nm=$('#pzNuevaMis',el);if(nm)nm.onclick=()=>{resguardarPz();PZ=pizarraNueva(PZ.formato);hist=[];FR=0;SEL=null;PZ_TAB='editar';pintar();window.scrollTo(0,0)}}
+  {const nm=$('#pzNuevaMis',el);if(nm)nm.onclick=()=>{resguardarPz();PZ=pizarraNueva(PZ.formato);hist=[];FR=0;SEL=null;PZ_TAB='editar';pintar();window.scrollTo(0,0);volverAmplia()}}
+  {const mb=$('#pzMisB',el);if(mb)mb.onclick=irMisPizarras}
+  {const sx=$('#pzSalirEd',el);if(sx)sx.onclick=()=>{const h=history.state;if(h&&h.mtk&&history.length>1&&!(h.r==='pizarra'&&!RUTA_ANT))history.back();else ir(RUTA_ANT&&RUTA_ANT!=='pizarra'?RUTA_ANT:'inicio')}}
+  $$('[data-pztab=editar]',el).forEach(b=>b.addEventListener('click',volverAmplia));
   conectarBarra(el);
   $$('[data-fr]',el).forEach(b=>b.onclick=()=>{FR=+b.dataset.fr;SEL=null;pintar()});
   $('#pzNombre').oninput=e=>PZ.nombre=e.target.value;
@@ -4548,7 +4643,7 @@ VISTAS.pizarra=el=>{
   {const gx=$('#pzGuiaX');if(gx)gx.onclick=()=>{try{localStorage.setItem('mtk_pz_guia','1')}catch(e){}pintar()};const gv=$('#pzGuiaVer');if(gv)gv.onclick=()=>{try{localStorage.removeItem('mtk_pz_guia')}catch(e){}pintar()}}
   $$('[data-fcp]',el).forEach(b=>b.onclick=()=>{fCatPz=b.dataset.fcp;pintar()});
   const fc=$('#fCarp');if(fc)fc.onchange=e=>{fCarpeta=e.target.value;pintar()};
-  $$('[data-abrir]',el).forEach(b=>b.onclick=()=>{PZ_TAB='editar';if(b.dataset.abrir!==PZ.id)resguardarPz();PZ=normalizar(JSON.parse(JSON.stringify(S.pizarras.find(p=>p.id===b.dataset.abrir))));hist=[];FR=0;SEL=null;pintar();window.scrollTo(0,0)});
+  $$('[data-abrir]',el).forEach(b=>b.onclick=()=>{PZ_TAB='editar';if(b.dataset.abrir!==PZ.id)resguardarPz();PZ=normalizar(JSON.parse(JSON.stringify(S.pizarras.find(p=>p.id===b.dataset.abrir))));hist=[];FR=0;SEL=null;pintar();window.scrollTo(0,0);volverAmplia()});
   $$('[data-borrarpz]',el).forEach(b=>b.onclick=()=>confirmar('¿Eliminar el ejercicio?','Las tareas que lo usan quedan sin diagrama.','Eliminar',()=>{S.pizarras=S.pizarras.filter(p=>p.id!==b.dataset.borrarpz);S.tareas.forEach(t=>{if(t.diagrama===b.dataset.borrarpz)t.diagrama=''});guardar();pintar()}));
   conectarCancha();pintarSel();
 };
@@ -8806,6 +8901,8 @@ function cambiarIdioma(v){try{localStorage.setItem('metodika_idioma',v)}catch(e)
 function selectorIdiomaHtml(){return `<div class="seg idiomas">${IDIOMAS.map(([v,t,f])=>`<button type="button" data-idioma="${v}" class="${IDIOMA===v?'activo':''}" data-noi18n>${f} ${t}</button>`).join('')}</div>`}
 function conectarIdioma(root){$$('[data-idioma]',root||document).forEach(b=>b.onclick=()=>{if(b.dataset.idioma!==IDIOMA)cambiarIdioma(b.dataset.idioma)})}
 /* S01_I18N */Object.assign(DIC_I18N,{"Agenda": ["Agenda", "Schedule"], "Método": ["Método", "Method"], "Equipo": ["Equipe", "Team"], "Menú": ["Menu", "Menu"], "¿Descartar los cambios?": ["Descartar as alterações?", "Discard changes?"], "Lo que cargaste en esta ventana todavía no se guardó. Si la cerrás, se pierde.": ["O que você preencheu nesta janela ainda não foi salvo. Se fechar, vai se perder.", "What you entered in this window isn't saved yet. If you close it, it will be lost."], "Seguir editando": ["Continuar editando", "Keep editing"], "Descartar cambios": ["Descartar alterações", "Discard changes"], "⋯ Más": ["⋯ Mais", "⋯ More"], "Buscar jugadora": ["Buscar jogadora", "Search player"], "Buscar jugador": ["Buscar jogador", "Search player"], "Buscar jugadora/or": ["Buscar jogadora/or", "Search player"], "Filtrar por posición": ["Filtrar por posição", "Filter by position"], "Filtrar por categoría": ["Filtrar por categoria", "Filter by category"], "▦ Dibujos": ["▦ Desenhos", "▦ Diagrams"], "☰ Lista": ["☰ Lista", "☰ List"], "Cómo ver las tareas": ["Como ver as tarefas", "How to view drills"], "✏️ Editar": ["✏️ Editar", "✏️ Edit"], "📁 Mis pizarras": ["📁 Minhas pranchetas", "📁 My boards"], "＋ Nueva": ["＋ Nova", "＋ New"], "Más de 1,5 veces su promedio": ["Mais de 1,5 vez a média", "Over 1.5× their average"], "Entre 0,8 y 1,3": ["Entre 0,8 e 1,3", "Between 0.8 and 1.3"], "Todavía sin promedio del mes": ["Ainda sem média do mês", "No monthly average yet"], "Lo que respondieron en los últimos 3 días (dolor, cansancio, sueño, ánimo)": ["O que responderam nos últimos 3 dias (dor, cansaço, sono, ânimo)", "Their answers in the last 3 days (pain, fatigue, sleep, mood)"], "Estado marcado por el cuerpo técnico en su ficha": ["Status marcado pela comissão técnica na ficha", "Status set by the coaching staff on their profile"], "Últimos 7 días: sin RPE la carga de ese día cuenta como 0": ["Últimos 7 dias: sem PSE a carga desse dia conta como 0", "Last 7 days: without RPE that day's load counts as 0"], "Tocá una fila para ver el detalle": ["Toque numa linha para ver o detalhe", "Tap a row to see details"], "Ver perfil": ["Ver perfil", "View profile"], "Habitual": ["Habitual", "Usual"], "Rojo: revisar la carga y charlar antes de entrenar.": ["Vermelho: revisar a carga e conversar antes de treinar.", "Red: review the load and talk before training."], "Otros avisos": ["Outros avisos", "Other alerts"], "Navegación principal": ["Navegação principal", "Main navigation"], "Desplegar el menú": ["Abrir o menu", "Expand menu"], "Plegar el menú": ["Recolher o menu", "Collapse menu"]});PAT_I18N.push([new RegExp("^Ver (\\d+) más$"),["Ver mais $1", "Show $1 more"]]);PAT_I18N.push([new RegExp("^Mostrando (\\d+) de (\\d+)$"),["Mostrando $1 de $2", "Showing $1 of $2"]]);PAT_I18N.push([new RegExp("^(\\d+) guardadas$"),["$1 salvas", "$1 saved"]]);PAT_I18N.push([new RegExp("^🔎 Análisis de (.+)$"),["🔎 Análise de $1", "🔎 $1 scouting"]]);PAT_I18N.push([new RegExp("^Ninguna coincidencia con «(.+)»\\.$"),["Nenhum resultado para «$1».", "No match for «$1»."]]);PAT_I18N.push([new RegExp("^Todavía no hay análisis de$"),["Ainda não há análise de", "There's no scouting yet for"]]);
+Object.assign(DIC_I18N,{"Mis herramientas": ["Minhas ferramentas", "My tools"], "Volver a los de siempre": ["Voltar ao padrão", "Reset to default"], "Listo: tus herramientas quedaron guardadas": ["Pronto: suas ferramentas foram salvas", "Done: your tools were saved"], "✕ Listo": ["✕ Pronto", "✕ Done"], "☑ Varias": ["☑ Várias", "☑ Several"], "⚙ Filtros": ["⚙ Filtros", "⚙ Filters"], "← Salir": ["← Sair", "← Exit"], "Salir de la pizarra": ["Sair da prancheta", "Exit the board"], "Mis pizarras": ["Minhas pranchetas", "My boards"]});PAT_I18N.push([new RegExp("^(\\d+) de (\\d+) elegidas( \\(máximo\\))?$"),["$1 de $2 escolhidas$3", "$1 of $2 chosen$3"]]);PAT_I18N.push([new RegExp("^⚙ Filtros \\((\\d+)\\)$"),["⚙ Filtros ($1)", "⚙ Filters ($1)"]]);
+{const _ini=VISTAS.inicio;VISTAS.inicio=el=>{_ini(el);if(catAct&&catAct()==='todas')return;const g=$('.grilla.g2',el);const h=panelHerramientas();if(g)g.insertAdjacentHTML('afterend',h);else el.insertAdjacentHTML('beforeend',h);   $$('[data-herr]',el).forEach(b=>b.onclick=()=>ir(b.dataset.herr));{const e=$('#herrEd',el);if(e)e.onclick=editarHerramientas}}} 
 aplicarTema();try{iniciarI18n()}catch(e){console.warn(e)}
 const JUGADA_COMP=new URLSearchParams(location.search).get('jugada');
 
